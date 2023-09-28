@@ -38,6 +38,8 @@ cmake_minimum_required(VERSION 3.12...3.13 FATAL_ERROR)
 
 project(mcut LANGUAGES CXX C) 
 
+option(MCUT_QUIET "Silence default log messaging" OFF)
+
 get_directory_property(MCUT_PARENT_DIR PARENT_DIRECTORY)
 if(NOT MCUT_PARENT_DIR)
 	set(MCUT_TOPLEVEL_PROJECT ON)
@@ -133,6 +135,9 @@ list(APPEND include_dirs  ${MCUT_INCLUDE_DIR})
 list(APPEND compilation_flags "")
 if(MCUT_BUILD_AS_SHARED_LIB)
 	list(APPEND preprocessor_defs -DMCUT_SHARED_LIB=1)
+endif()
+if(MCUT_QUIET)
+	list(APPEND preprocessor_defs -DMCUT_QUIET=1)
 endif()
 
 find_package(Threads REQUIRED)
